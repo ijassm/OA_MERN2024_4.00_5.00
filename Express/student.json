@@ -1,0 +1,17 @@
+[
+  {
+    "fullName": "ABC",
+    "age": 14,
+    "skills": ["HTML", "CSS", "JavaSscript", "NodeJs", "ExpressJs"]
+  },
+  {
+    "fullName": "ABC",
+    "age": 14,
+    "skills": ["HTML", "CSS", "JavaSscript", "NodeJs", "ExpressJs"]
+  },
+  {
+    "fullName": "BBC",
+    "age": 14,
+    "skills": ["HTML", "CSS", "JavaSscript", "NodeJs", "ExpressJs"]
+  }
+]
