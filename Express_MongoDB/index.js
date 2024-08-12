@@ -7,7 +7,7 @@ const studentRoutes = require("./src/routes/student-route");
 
 app.use(express.json());
 
-console.log(process.env.uri);
+// console.log(process.env.uri);
 
 app.use("/student", studentRoutes);
 

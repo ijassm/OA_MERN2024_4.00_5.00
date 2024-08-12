@@ -20,7 +20,7 @@ const getStudent = async (req, res) => {
 
     res.status(201).json({
       status: "success",
-      message: "Student added successfully",
+      message: "Retrieved student successfully",
       data: students,
     });
   } catch (error) {
@@ -28,4 +28,59 @@ const getStudent = async (req, res) => {
   }
 };
 
-module.exports = { addStudent, getStudent };
+const getStudentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const student = await StudentModel.findById(id);
+
+    res.status(201).json({
+      status: "success",
+      message: "Retrieved student successfully",
+      data: student,
+    });
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message });
+  }
+};
+
+const getStudentByIdAndUpdate = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const student = await StudentModel.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    res.status(201).json({
+      status: "success",
+      message: "Student updated successfully",
+      data: student,
+    });
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message });
+  }
+};
+
+const deleteStudentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await StudentModel.findByIdAndDelete(id);
+
+    res.status(201).json({
+      status: "success",
+      message: "Student deleted successfully",
+    });
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message });
+  }
+};
+
+module.exports = {
+  addStudent,
+  getStudent,
+  getStudentById,
+  getStudentByIdAndUpdate,
+  deleteStudentById,
+};
