@@ -5,11 +5,17 @@ const {
   getStudentById,
   getStudentByIdAndUpdate,
   deleteStudentById,
+  login,
+  register,
 } = require("../controllers/student-controller");
 const { authMiddlware } = require("../middeware/auth-middleware");
 const { idCheckerMiddleware } = require("../middeware/idChecker-middleware");
 
 const router = express.Router();
+
+router.post("/login", login);
+
+router.post("/register", register);
 
 router.post("/add", addStudent);
 
