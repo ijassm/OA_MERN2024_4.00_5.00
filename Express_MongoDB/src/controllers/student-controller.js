@@ -100,7 +100,7 @@ const login = async (req, res) => {
     }
 
     // Generate a token
-    const token = jwt.sign({ id: student.id }, "ABC");
+    const token = jwt.sign({ id: student.id }, process.env.SECRET_KEY);
 
     res.status(201).json({
       status: "success",
