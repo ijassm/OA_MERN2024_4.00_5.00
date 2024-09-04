@@ -1,7 +1,38 @@
 import { useState } from 'react'
 import './App.css'
+import { data } from "./data"
 
 function App() {
+  return (
+    <>
+      <CardApp />
+    </>
+  )
+}
+
+
+function CardApp() {
+  return <>
+    <main className='flex gap-12 flex-wrap'>
+      {data.map((data, index) => {
+        if (index % 2 === 0) {
+          return <section key={data.id} className='border-green-800 border-solid border-[1px] p-5 max-w-64'>
+            <h2 className='text-2xl my-5'>{data.title}</h2>
+            <p>{data.description}</p>
+          </section>
+        }
+        return <section key={data.id} className='border-red-800 border-solid border-[1px] p-5 max-w-64'>
+          <h2 className='text-2xl my-5'>{data.title}</h2>
+          <p>{data.description}</p>
+        </section>
+      })}
+    </main>
+  </>
+}
+
+function CounterApp() {
+  console.log("app is called");
+
   // console.log(useState(5));
 
   // const count = useState(5);
