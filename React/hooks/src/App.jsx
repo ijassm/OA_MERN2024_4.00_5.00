@@ -4,8 +4,10 @@ import { data } from "./data";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
 
-const FormDialog = ({ toggleModal, isOpen, data }) => {
+const FormDialog = ({ toggleModal, isOpen, data, setCardData }) => {
   // Initialize state
+  const [id] = useState(data?.id || '');
+
   const [formData, setFormData] = useState({
     title: data?.title || '',
     description: data?.description || ''
@@ -13,12 +15,46 @@ const FormDialog = ({ toggleModal, isOpen, data }) => {
 
   // Handle input change
   const onChangeHandler = (e) => {
+    // console.log(e, "event");
+    // console.log(e.target, "target");
+    // console.log(e.target.name, "target name");
+    // console.log(e.target.value, "target value");
+    // console.log(e.target.className, "target className");
+
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value
-    }));
+
+    console.log(name, value);
+
+
+    // if (name === "title") {
+    //   setFormData({ ...formData, title: value })
+    // } else {
+    //   setFormData({ ...formData, description: value })
+    // }
+
+    // console.log(`${name} - ${value}`);
+
+    setFormData({ ...formData, [name]: value })
+
+    // setFormData((prevFormData) => ({
+    //   ...prevFormData,
+    //   [name]: value
+    // }));
   };
+
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setCardData((prevCardData) => {
+      return prevCardData.map((obj) => {
+        if (obj.id === id) {
+          return { ...obj, title: formData.title, description: formData.description };
+        }
+        return obj;
+      })
+    })
+    toggleModal();
+  }
 
 
 
@@ -40,6 +76,7 @@ const FormDialog = ({ toggleModal, isOpen, data }) => {
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Update Form
               </h3>
+              <h1>{JSON.stringify(formData)}</h1>
               <button
                 type="button"
                 onClick={toggleModal}
@@ -79,6 +116,7 @@ const FormDialog = ({ toggleModal, isOpen, data }) => {
                 <button
                   type="submit"
                   className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={submitHandler}
                 >
                   Update
                 </button>
@@ -138,8 +176,8 @@ function CardApp() {
   };
 
   const editHandler = (data) => {
-    setModelData(data);
     toggleModal();
+    setModelData(data);
   };
 
   return (
@@ -150,6 +188,7 @@ function CardApp() {
             isOpen={isOpen}
             toggleModal={toggleModal}
             data={modelData}
+            setCardData={setCardData}
           />
         )
       }
