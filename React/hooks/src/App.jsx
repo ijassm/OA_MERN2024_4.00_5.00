@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "./App.css";
 import { Concepts } from "./pages/Concepts";
-import { CounterApp } from "./pages/Counter";
+
 
 function App() {
   console.log('app started');
