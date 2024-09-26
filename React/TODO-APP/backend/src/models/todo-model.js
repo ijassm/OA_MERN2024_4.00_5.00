@@ -5,7 +5,6 @@ const todoSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Title is required"],
       minlength: [3, "Title must be at least 3 characters long"],
       maxlength: [100, "Title cannot exceed 100 characters"],
     },
@@ -24,13 +23,16 @@ const todoSchema = new mongoose.Schema(
     priority: {
       type: String,
       enum: ["low", "medium", "high"],
-      required: [true, "Priority is required"],
+      default: "low",
     },
   },
   { timestamps: true }
 ); // Automatically adds createdAt and updatedAt fields
 
-// Create the Todo model from the schema
-const TodoModel = mongoose.model("Todo", todoSchema);
+// Create the model
+const myDB = mongoose.connection.useDb("TODO");
 
-module.exports = TodoModel;
+// Create the Todo model from the schema
+const TodoModel = myDB.model("Todo", todoSchema);
+
+module.exports = { TodoModel };
