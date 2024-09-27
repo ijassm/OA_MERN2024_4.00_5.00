@@ -1,3 +1,3 @@
 module.exports = {
-  ...require("./todo-controller"),
+  ...require("./task-controller"),
 };

@@ -32,7 +32,7 @@ const todoSchema = new mongoose.Schema(
 // Create the model
 const myDB = mongoose.connection.useDb("TODO");
 
-// Create the Todo model from the schema
-const TodoModel = myDB.model("Todo", todoSchema);
+// Create the task model from the schema
+const TaskModel = myDB.model("task", todoSchema);
 
-module.exports = { TodoModel };
+module.exports = { TaskModel };

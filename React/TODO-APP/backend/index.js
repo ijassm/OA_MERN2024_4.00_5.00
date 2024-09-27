@@ -1,7 +1,7 @@
 require("dotenv").config();
 require("./src/databaseConnection");
 const express = require("express");
-const todoRoutes = require("./src/routes/todo-route");
+const taskRoutes = require("./src/routes/task-route");
 const app = express();
 
 // Middleware to parse JSON request bodies
@@ -17,7 +17,7 @@ app.use(express.json());
 
 // Middlware Route
 
-app.use("/todo", todoRoutes);
+app.use("/task", taskRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the TODO server");

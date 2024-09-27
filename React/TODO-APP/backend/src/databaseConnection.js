@@ -12,9 +12,12 @@ async function run() {
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
+  } catch (error) {
+    console.error(error);
   } finally {
     // Ensures that the client will close when you finish/error
     // await mongoose.disconnect();
   }
 }
-run().catch(console.dir);
+
+run();

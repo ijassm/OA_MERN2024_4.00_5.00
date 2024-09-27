@@ -1,3 +1,3 @@
 module.exports = {
-  ...require("./todo-validator"),
+  ...require("./task-validator"),
 };

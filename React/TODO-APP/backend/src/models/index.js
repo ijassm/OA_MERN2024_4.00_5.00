@@ -1,3 +1,3 @@
 module.exports = {
-  ...require("./todo-model"),
+  ...require("./task-model"),
 };
