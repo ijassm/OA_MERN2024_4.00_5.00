@@ -3,10 +3,12 @@ require("./src/databaseConnection");
 const express = require("express");
 const taskRoutes = require("./src/routes/task-route");
 const app = express();
+var cors = require("cors");
 
 // Middleware to parse JSON request bodies
 
 app.use(express.json());
+app.use(cors());
 
 // Middleware to log request details
 

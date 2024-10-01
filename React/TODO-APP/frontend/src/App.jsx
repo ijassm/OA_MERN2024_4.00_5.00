@@ -1,7 +1,25 @@
+import { useState, useEffect } from 'react'
 import './App.css'
 import { Input, Todo, TodoItem } from './components'
+import axios from 'axios';
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+
+  const getTasks = async () => {
+    try {
+      const tasks = await axios.get("http://localhost:5000/task/get");
+      setTasks(tasks.data.data)
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  useEffect(() => {
+    getTasks();
+  }, [])
+
+
   return (
     <Todo className="max-w-[500px] m-auto p-2 bg-white rounded">
       <h1>Todo List 📑</h1>
@@ -19,7 +37,13 @@ function App() {
       </section>
       <hr />
 
-      <TodoItem />
+      <main className='mx-4'>
+        {
+          tasks.map((task) => (
+            <TodoItem key={task._id} title={task.title} />
+          ))
+        }
+      </main>
     </Todo>
   )
 }
