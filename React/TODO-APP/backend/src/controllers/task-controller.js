@@ -33,10 +33,12 @@ const addTask = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
+    console.log(req.body);
+
     // Add the task to the database
     const task = new TaskModel(req.body);
 
-    // Save the task to the database
+    // // Save the task to the database
     await task.save();
 
     // Send a success response
@@ -92,7 +94,7 @@ const deleteTask = async (req, res) => {
 
   try {
     // Find and update the task in the database
-    const updatedTask = await TaskModel.findByIdAndDelete(taskId, req.body);
+    const updatedTask = await TaskModel.findByIdAndDelete(taskId);
 
     // If the task is not found, return a 404 error
     if (!updatedTask) {
@@ -117,4 +119,32 @@ const deleteTask = async (req, res) => {
   }
 };
 
-module.exports = { getTasks, addTask, updateTask, deleteTask };
+const deleteAllTasks = async (req, res) => {
+  try {
+    // Find and update the task in the database
+    await TaskModel.deleteMany();
+
+    // If the task is not found, return a 404 error
+    // if (!updatedTask) {
+    //   return res.status(404).json({
+    //     status: "error",
+    //     message: "Task not found",
+    //   });
+    // }
+
+    // Send a success response
+    return res.status(200).json({
+      status: "success",
+      message: "Tasks deleted successfully",
+    });
+  } catch (error) {
+    // Handle errors during database operations
+    return res.status(500).json({
+      status: "error",
+      message: "Failed to update task",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { getTasks, addTask, updateTask, deleteTask, deleteAllTasks };
