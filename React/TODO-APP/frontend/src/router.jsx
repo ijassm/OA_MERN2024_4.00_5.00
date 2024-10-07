@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Todo } from "./pages/Todo/Todo";
+import { AllTasks, CompletedTasks, PendingTasks, Todo } from "./pages";
+
 
 export const router = createBrowserRouter(
     [
@@ -7,9 +8,9 @@ export const router = createBrowserRouter(
             path: "/",
             element: <Todo />,
             children: [
-                { path: "all", element: <h1>About</h1> },
-                { path: "pending", element: <h1>About</h1> },
-                { path: "completed", element: <h1>About</h1> },
+                { path: "all", element: <AllTasks /> },
+                { path: "pending", element: <PendingTasks /> },
+                { path: "completed", element: <CompletedTasks /> },
             ],
         },
         {
