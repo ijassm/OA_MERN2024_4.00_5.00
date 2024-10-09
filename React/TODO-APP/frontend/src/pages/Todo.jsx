@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Input } from "../components/Input";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useTodoContext } from "./context/TodoContext";
 
 export const Todo = () => {
+    const navigate = useNavigate();
     const {
         getTasksHandler,
         data,
@@ -11,12 +12,16 @@ export const Todo = () => {
         addTaskHandler,
         deleteAllTasksHandler,
         isLoading,
+        taskCount
     } = useTodoContext();
 
 
     useEffect(() => {
         getTasksHandler();
+        navigate("all")
     }, []);
+
+    const navStyle = ({ isActive }) => (isActive ? "text-fuchsia-950 font-bold mr-3 cursor-pointer" : "text-black mr-3 cursor-pointer")
 
 
     return (
@@ -37,10 +42,26 @@ export const Todo = () => {
             </section>
             <section className="flex justify-between">
                 <main>
-                    <span className="mr-3 cursor-pointer">All</span>
-                    <span className="mr-3 cursor-pointer">Pending</span>
-                    <span className="mr-3 cursor-pointer">Completed</span>
+                    <NavLink
+                        className={navStyle}
+                        to="all"
+                    >
+                        <span>All({taskCount.totalCount})</span>
+                    </NavLink>
+                    <NavLink
+                        className={navStyle}
+                        to="pending"
+                    >
+                        <span>Pending({taskCount.pendingCount})</span>
+                    </NavLink>
+                    <NavLink
+                        className={navStyle}
+                        to="completed"
+                    >
+                        <span>Completed({taskCount.completedCount})</span>
+                    </NavLink>
                 </main>
+
                 <button onClick={deleteAllTasksHandler}>Clear</button>
             </section>
             <hr />

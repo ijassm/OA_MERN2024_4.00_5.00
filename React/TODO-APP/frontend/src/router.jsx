@@ -5,10 +5,10 @@ import { AllTasks, CompletedTasks, PendingTasks, Todo } from "./pages";
 export const router = createBrowserRouter(
     [
         {
-            path: "/",
+            path: "",
             element: <Todo />,
             children: [
-                { path: "all", element: <AllTasks /> },
+                { path: "/all", element: <AllTasks /> },
                 { path: "pending", element: <PendingTasks /> },
                 { path: "completed", element: <CompletedTasks /> },
             ],

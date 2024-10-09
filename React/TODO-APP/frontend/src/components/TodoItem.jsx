@@ -5,17 +5,24 @@ export function TodoItem({ task }) {
     const {
         deleteTaskHandler,
         makeCompletionHandler,
+        makePendingHandler,
     } = useTodoContext();
-
-    console.log(task);
 
     const { _id, title, status } = task;
 
     const isStatus = status === "completed";
 
 
-    const handleCheckboxChange = () => {
-        makeCompletionHandler(_id); // Mark task as completed
+    const handleCheckboxChange = (e) => {
+        const checkbox = e.target.checked;
+
+        console.log(checkbox);
+
+
+        if (checkbox) makeCompletionHandler(_id); // Mark task as completed
+        else makePendingHandler(_id); // Mark task as pending
+
+
     };
 
     return (
