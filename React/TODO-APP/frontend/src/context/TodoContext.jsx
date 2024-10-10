@@ -8,9 +8,13 @@ export function TodoProvider({ children }) {
   const [data, setData] = useState("");
   const [taskCount, setTaskCount] = useState({ pendingCount: 0, completedCount: 0, totalCount: 0 });
   const [isLoading, setIsLoading] = useState(false);
-
-  // console.log(tasks);
-
+  const [editTask, setEditTask] = useState(
+    {
+      _id: null,
+      title: null,
+      status: null
+    }
+  );
 
   const getTaskCount = (data) => {
     let pendingCount = 0;
@@ -122,21 +126,58 @@ export function TodoProvider({ children }) {
     }
   };
 
-  const deleteTaskHandler = async (id) => {
-    // console.log(id, "id");
+  const deleteTaskHandler = async (id, status) => {
 
     try {
       await axios.delete(`http://localhost:5000/task/delete/${id}`);
 
-      setTasks((prevTask) => {
-        const remainingTask = prevTask.filter((task) => task._id !== id);
-        // console.log(remainingTask);
-        return remainingTask;
-      });
+      setTasks((prevTask) => prevTask.filter((task) => task._id !== id));
+
+      if (status === "completed") {
+        setTaskCount((prevTaskCount) => ({
+          ...prevTaskCount,
+          completedCount: prevTaskCount.completedCount - 1,
+          totalCount: prevTaskCount.totalCount - 1
+        }))
+      } else {
+        setTaskCount((prevTaskCount) => ({
+          ...prevTaskCount,
+          pendingCount: prevTaskCount.pendingCount - 1,
+          totalCount: prevTaskCount.totalCount - 1
+        }))
+      }
+
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  const updateTaskHandler = async (id, updatedTitle) => {
+    try {
+      await axios.put(`http://localhost:5000/task/update/${id}`, { title: updatedTitle });
+
+      setEditTask({
+        _id: null,
+        title: null,
+        status: null
+      })
+
+
+      setTasks((prevTask) =>
+        prevTask.map((task) => {
+          if (task._id === id) {
+            return { ...task, title: updatedTitle };
+          }
+          return task;
+        })
+      );
+
+
+    } catch (e) {
+      console.error(e.message);
+    }
+
+  }
 
   const makeCompletionHandler = async (id) => {
     try {
@@ -149,7 +190,6 @@ export function TodoProvider({ children }) {
           }
           return task;
         });
-        // console.log(remainingTask);
         return remainingTask;
       });
 
@@ -170,6 +210,12 @@ export function TodoProvider({ children }) {
 
   const onChangeHandler = (e) => setData(e.target.value);
 
+  const changeEditableTaskHandler = (task) => {
+    // console.log(task);
+
+    setEditTask(task);
+  };
+
   return (
     <TodoContext.Provider
       value={{
@@ -182,6 +228,9 @@ export function TodoProvider({ children }) {
         onChangeHandler,
         deleteTaskHandler,
         makeCompletionHandler,
+        updateTaskHandler,
+        changeEditableTaskHandler,
+        editTask,
         isLoading,
         taskCount
       }}

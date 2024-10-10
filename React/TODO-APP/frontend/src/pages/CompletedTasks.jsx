@@ -1,5 +1,5 @@
 import { TodoItem } from "../components/TodoItem";
-import { useTodoContext } from "./context/TodoContext";
+import { useTodoContext } from "../context/TodoContext";
 
 export function CompletedTasks() {
     const { tasks } = useTodoContext();
